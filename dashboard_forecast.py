@@ -12,6 +12,7 @@ import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
 import seaborn as sns
 import os
+from pathlib import Path
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -173,21 +174,22 @@ ACCENT = "#4f86f7"
 # ════════════════════════════════════════════════════════════
 
 # Find default data paths
+base_path = Path(__file__).parent
 metrics_path_default = None
 raw_path_default = None
 
-for candidate in ["model_evaluation_results.csv",
-                   "./data/model_evaluation_results.csv",
-                   "/mnt/user-data/uploads/model_evaluation_results.csv"]:
-    if os.path.exists(candidate):
-        metrics_path_default = candidate
+for candidate in [base_path / "model_evaluation_results.csv",
+                   base_path / "data" / "model_evaluation_results.csv",
+                   Path("/mnt/user-data/uploads/model_evaluation_results.csv")]:
+    if candidate.exists():
+        metrics_path_default = str(candidate)
         break
 
-for candidate in ["all_months_clean.csv",
-                   "./data/all_months_clean.csv",
-                   "/mnt/user-data/uploads/all_months_clean.csv"]:
-    if os.path.exists(candidate):
-        raw_path_default = candidate
+for candidate in [base_path / "all_months_clean.csv",
+                   base_path / "data" / "all_months_clean.csv",
+                   Path("/mnt/user-data/uploads/all_months_clean.csv")]:
+    if candidate.exists():
+        raw_path_default = str(candidate)
         break
 
 # --- Sidebar ---
